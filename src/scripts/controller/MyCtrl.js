@@ -2,12 +2,12 @@
  * Created by ARNAB on 9/15/2016.
  */
 app.controller('MyCtrl', function($scope,$http, swaggerTranslator,myservice) {
-    // For display left side menu dynamically
+    // For display left side menu dynamically entities
     $scope.dataToList=[];
 
     $http.get('mainFile.json').then(function(response) {
         $scope.dataToList =response.data.categories;
-        //console.log($scope.dataToList);
+        console.log($scope.dataToList);
 
     });
     $scope.loadSwagger=function (swaggerFileName) {

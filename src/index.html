@@ -12,6 +12,8 @@
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/angular-sanitize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.5.4/js-yaml.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- angular-swagger-ui -->
     <script src="scripts/app.js"></script>
@@ -30,19 +32,23 @@
     <script src="scripts/i18n/fr.js"></script>
 </head>
 <body>
+
     <div class="container-fluid">
         <div class="row-fluid">
-            <div ng-controller="MyCtrl" class="my-ctrl">
-            <div class="col-lg-3">
-                <div class="well sidebar-nav">
-                    <ul class="nav nav-list" ng-repeat="data in dataToList" data-toggle="collapse" data-target="#demo">
-                        <li class="nav-header">{{data.category}}</li>
 
-                        <li id="demo"><a href="#" ng-click="loadSwagger(data.entities[0].id)">{{data.entities[0].name}}</a></li>
-                    </ul>
+            <div ng-controller="MyCtrl" class="my-ctrl">
+            <div class="col-lg-3 well sidebar-nav">
+                <div class="accordion" ng-repeat="data in dataToList">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse" data-parent=".accordion" href="#{{$index}}">
+                            <h4 class="panel-title">{{data.category}}</h4>
+                        </div>
+                        <div id="{{$index}}" class="panel-collapse collapse">
+                            <div class="panel-body" ng-repeat="entry in data.entities"><a href="#" ng-click="loadSwagger(entry.id)">{{entry.name}}</a></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
 
                 <div class="col-lg-9">
                     <h1 swagger-translate="appTitle"></h1>
