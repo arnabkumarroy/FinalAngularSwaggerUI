@@ -1,0 +1,570 @@
+{
+    "basePath": "/",
+    "definitions": {
+        "CustomerMaskedNameResponse": {
+            "properties": {
+                "customerMaskedName": {
+                    "description": "Customer Name",
+                    "example": "J***H***",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "customerMaskedName"
+            ],
+            "type": "string"
+        },
+        "ErrorResponse": {
+            "properties": {
+                "code": {
+                    "description": "Error code which qualifies the error",
+                    "type": "string"
+                },
+                "details": {
+                    "description": "Human readable explanation specific to the occurrence of the problem",
+                    "type": "string"
+                },
+                "location": {
+                    "description": "The name of the field that resulted in the error",
+                    "type": "string"
+                },
+                "moreInfo": {
+                    "description": "URI to human readable documentation of the error",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "<br>invalid - Request did not confirm to the specification and was unprocessed & rejected. Please fix the value and try again</br>                         <br>warn - Request was partially processed.  E.g. some of the fields are missing in response to the system issues,  request was accepted successfully but will be processed asynchronously</br>                                                           <br>error - The request was accepted but could not be processed successfully</br>            <br>fatal - There was an internal system error while processing the request. These are technical errors and will be resolved by Citi, and the consumer should retry after some time. Business errors will not be categorized as fatal </br>",
+                    "enum": [
+                        "error",
+                        "warn",
+                        "invalid",
+                        "fatal"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "code"
+            ]
+        },
+        "ResetPasswordRequest": {
+            "properties": {
+                "newPassword": {
+                    "description": "Password for the customer",
+                    "example": "xevdfgl3!gkl0rosfsdf6gwp405kc836",
+                    "type": "string"
+                },
+                "userId": {
+                    "description": "The customer's user ID",
+                    "example": "ngaclient_8835",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "userId",
+                "newPassword"
+            ],
+            "type": "object"
+        },
+        "UserLoginRequest": {
+            "properties": {
+                "encryptedPassword": {
+                    "description": "Encrypted password of the customer.",
+                    "example": "xevdfgl3!gkl0rof34df6gwp405kc835",
+                    "type": "string"
+                },
+                "userID": {
+                    "description": "The customer's user ID",
+                    "example": "ngaclient_8835",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "userID",
+                "encryptedPassword"
+            ],
+            "type": "object"
+        },
+        "UserLoginResponse": {
+            "properties": {
+                "customerId": {
+                    "description": "Customer client id",
+                    "example": "12345678",
+                    "type": "string"
+                },
+                "lastLoginTime": {
+                    "description": "Last successful login timestamp in ISO-8601 UTC format,",
+                    "example": "2015-05-20T13:20:00-05:00",
+                    "format": "date",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "lastLoginTime",
+                "customerId"
+            ],
+            "type": "object"
+        }
+    },
+    "host": "vm-e981-342d.nam.nsroot.net:8085",
+    "info": {
+        "description": "These API's are used to authenticate a CCP user and establish a profile in CCS with userID/password credentials and use a federated profile in CCS that is tied to the userID/password credentials.. These APIs support functions such as retrieving a customer masked name, validating user credentials, changing userID/password, recovering userID, resetting password, hard blocking a user etc.",
+        "title": "CCP User",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/usermanagement/auth/signin": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "Login a registered customer using their userID and encrypted or clear password. Returns the timestamp of their last login and cif. For native applications alone, an encrypted eventID and eventID expiration time will be passed in the response header. ",
+                "parameters": [
+                    {
+                        "default": "a7d1e304-83a9-4413-af97-62615e57eae66807840",
+                        "description": "A 128 bit universally unique identifier (UUID) that you generate for every request and is used for tracking. It is recommended to use the output from Java UUID class or an equivalent.",
+                        "in": "header",
+                        "name": "uuid",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "application/json",
+                        "description": "Content-Types that are acceptable for the response. Currently we support application/json",
+                        "in": "header",
+                        "name": "Accept",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "en-US",
+                        "description": "HTTP Accept-Language header",
+                        "in": "header",
+                        "name": "Accept-Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "AU",
+                        "description": "2 character ISO country code",
+                        "in": "header",
+                        "name": "countryCode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "GCB",
+                        "description": "3 character business code",
+                        "in": "header",
+                        "name": "businessCode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "CML",
+                        "description": "channel ID used by the user",
+                        "in": "header",
+                        "name": "channelId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "abbb4837-8343-418c-93d8-77a8519dff9e",
+                        "description": "sid",
+                        "in": "header",
+                        "name": "sid",
+                        "type": "string"
+                    },
+                    {
+                        "default": "iX4xW5lG0gD6cX3uI5qN3pF6yK5nY2kB0eY5tB3xQ4rD4fD2xO",
+                        "description": "The client ID  you received during application registration in the developer portal",
+                        "in": "header",
+                        "name": "client_id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "iX4xW5lG0gD6cX3uI5qN3pF6yK5nY2kB0eY5tB3xQ4rD4fD2xO",
+                        "description": "Client Secret generated during application registration",
+                        "in": "header",
+                        "name": "client_secret",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Login request with the required details to validate the user login.",
+                        "in": "body",
+                        "name": "UserLoginRequest",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserLoginRequest"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded",
+                        "schema": {
+                            "$ref": "#/definitions/UserLoginResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "(BAD REQUEST) - Request was not processed <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>invalid</td><td>invalidRequest</td><td>Missing or invalid Parameters</td></tr><tr><td>error</td><td>userAccountNotActive</td><td>180-account not active</td></tr><tr><td>error</td><td>userAccountLocked</td><td>15-accountlocked</td></tr><tr><td>error</td><td>userAccountSuperLocked</td><td>132-account super locked</td></tr><tr><td>error</td><td>mustChangePassword</td><td>16-must change password</td></tr><tr><td>error</td><td>passwordExpired</td><td>9-password has expired</td></tr><tr><td>invalid</td><td>credentialValidationFailed</td><td>20-master validation failure</td></tr><tr><td>error</td><td>incompleteRegistration</td><td>107-customer registration incomplete</td></tr><tr><td>invalid</td><td>invalidChannelID</td><td>628-Channel ID does not exist</td></tr><tr><td>error</td><td>userIdNotFound</td><td>user Id not exist</td></tr><tr><td>invalid</td><td>invalidRequest</td><td>invalid request</td></tr><tr><td>error</td><td>maximumAttemptsLimitExceeded</td><td>maximum attempts limit exceeded</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "(FORBIDDEN) - Unauthorized to perform the requested operation on resource <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More Info</td></tr><tr><td>invalid</td><td>accessNotConfigured</td><td>The request operation is not configured to access this resource</td><td>Channel/Country/Business provided in the request is not supported currently</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "(INTERNAL SERVER ERROR) - API Server Error <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The request failed due to an internal error/server unavailability</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "summary": "User login",
+                "tags": [
+                    "User"
+                ]
+            }
+        },
+        "/usermanagement/auth/signoff": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "This API needs to be used to Log Off from NGA Sesison based on SID in header",
+                "parameters": [
+                    {
+                        "default": "a7d1e304-83a9-4413-af97-62615e57eae66807840",
+                        "description": "A 128 bit universally unique identifier (UUID) that you generate for every request and is used for tracking. It is recommended to use the output from Java UUID class or an equivalent.",
+                        "in": "header",
+                        "name": "uuid",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "application/json",
+                        "description": "Content-Types that are acceptable for the response. Currently we support application/json",
+                        "in": "header",
+                        "name": "Accept",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "en-US",
+                        "description": "HTTP Accept-Language header",
+                        "in": "header",
+                        "name": "Accept-Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "AU",
+                        "description": "2 character ISO country code",
+                        "in": "header",
+                        "name": "countryCode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "GCB",
+                        "description": "3 character business code",
+                        "in": "header",
+                        "name": "businessCode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "CML",
+                        "description": "channel ID used by the user",
+                        "in": "header",
+                        "name": "channelId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "29738e5a-fbbf-4b55-981d-d2f3d2a60605",
+                        "description": "The client ID  you received during application registration in the developer portal",
+                        "in": "header",
+                        "name": "client_id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "iX4xW5lG0gD6cX3uI5qN3pF6yK5nY2kB0eY5tB3xQ4rD4fD2xO",
+                        "description": "Client Secret generated during application registration",
+                        "in": "header",
+                        "name": "client_secret",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "default": "abbb4837-8343-418c-93d8-77a8519dff9e",
+                        "description": "sid",
+                        "in": "header",
+                        "name": "sid",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "LogOff is successful "
+                    },
+                    "400": {
+                        "description": "(BAD REQUEST) - Request was not processed <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>invalid</td><td>invalidRequest</td><td>Missing Parameters</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "(INTERNAL SERVER ERROR) - API Server Error <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The request failed due to an internal error/server unavailability</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "summary": "NGA Log Off API",
+                "tags": [
+                    "Log Off"
+                ]
+            }
+        },
+        "/private/customers/password/reset": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "Reset the master and product password. For native application alone, an encrypted eventID and eventID expiration time will be passed in the response header.",
+                "parameters": [
+                    {
+                        "default": "a7d1e304-83a9-4413-af97-62615e57eae66807840",
+                        "description": "A 128 bit universally unique identifier (UUID) that you generate for every request and is used for tracking. It is recommended to use the output from Java UUID class or an equivalent.",
+                        "in": "header",
+                        "name": "uuid",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "application/json",
+                        "description": "Content-Types that are acceptable for the response. Currently we support application/json",
+                        "in": "header",
+                        "name": "Accept",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "en-US",
+                        "description": "HTTP Accept-Language header",
+                        "in": "header",
+                        "name": "Accept-Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "AU",
+                        "description": "2 character ISO country code",
+                        "in": "header",
+                        "name": "countryCode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "GCB",
+                        "description": "3 character business code",
+                        "in": "header",
+                        "name": "businessCode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "Request object with required details to reset password.",
+                        "in": "body",
+                        "name": "resetPasswordRequest",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ResetPasswordRequest"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Password successfully reset.",
+                        "headers": {
+                            "eventID": {
+                                "description": "This is a unique event id generated and encrypted with session key, which can be used to send in the next encrypted payload to validate.",
+                                "type": "string"
+                            },
+                            "eventIDExpTime": {
+                                "description": "Event ID expiration time encrypted with session key",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "(BAD REQUEST) - Request was not processed <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>invalid</td><td>21</td><td>21-master userID not found</td></tr><tr><td>invalid</td><td>13</td><td>13-user name not found</td></tr><tr><td>invalid</td><td>180</td><td>180-account not active</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "(FORBIDDEN) - Unauthorized to perform the requested operation on resource <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More Info</td></tr><tr><td>invalid</td><td>accessNotConfigured</td><td>The request operation is not configured to access this resource</td><td>Channel/Country/Business provided in the request is not supported currently</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "(INTERNAL SERVER ERROR) - API Server Error <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The request failed due to an internal error/server unavailability</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "summary": "Reset Password",
+                "tags": [
+                    "User"
+                ]
+            }
+        },
+        "/usermanagement/user/maskedname/{userName}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "This API returned a masked customer name.",
+                "parameters": [
+                    {
+                        "default": "a7d1e304-83a9-4413-af97-62615e57eae66807840",
+                        "description": "A 128 bit universally unique identifier (UUID) that you generate for every request and is used for tracking. It is recommended to use the output from Java UUID class or an equivalent.",
+                        "in": "header",
+                        "name": "uuid",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "application/json",
+                        "description": "Content-Types that are acceptable for the response. Currently we support application/json",
+                        "in": "header",
+                        "name": "Accept",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "en-US",
+                        "description": "HTTP Accept-Language header",
+                        "in": "header",
+                        "name": "Accept-Language",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "AU",
+                        "description": "2 character ISO country code",
+                        "in": "header",
+                        "name": "countryCode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "GCB",
+                        "description": "3 character business code",
+                        "in": "header",
+                        "name": "businessCode",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "CML",
+                        "description": "channel ID used by the user",
+                        "in": "header",
+                        "name": "channelId",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "abbb4837-8343-418c-93d8-77a8519dff9e",
+                        "description": "sid",
+                        "in": "header",
+                        "name": "sid",
+                        "type": "string"
+                    },
+                    {
+                        "default": "iX4xW5lG0gD6cX3uI5qN3pF6yK5nY2kB0eY5tB3xQ4rD4fD2xO",
+                        "description": "The client ID  you received during application registration in the developer portal",
+                        "in": "header",
+                        "name": "client_id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "iX4xW5lG0gD6cX3uI5qN3pF6yK5nY2kB0eY5tB3xQ4rD4fD2xO",
+                        "description": "User name requested for masked customer",
+                        "in": "path",
+                        "name": "userName",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request has succeeded",
+                        "schema": {
+                            "$ref": "#/definitions/CustomerMaskedNameResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "(BAD REQUEST) - Request was not processed <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>invalid</td><td>invalidRequest</td><td>Missing or invalid Parameters</td></tr><tr><td>error</td><td>userAccountNotActive</td><td>180-account not active</td></tr><tr><td>error</td><td>userAccountLocked</td><td>15-accountlocked</td></tr><tr><td>error</td><td>userAccountSuperLocked</td><td>132-account super locked</td></tr><tr><td>error</td><td>mustChangePassword</td><td>16-must change password</td></tr><tr><td>error</td><td>passwordExpired</td><td>9-password has expired</td></tr><tr><td>invalid</td><td>credentialValidationFailed</td><td>20-master validation failure</td></tr><tr><td>error</td><td>incompleteRegistration</td><td>107-customer registration incomplete</td></tr><tr><td>invalid</td><td>invalidChannelID</td><td>628-Channel ID does not exist</td></tr><tr><td>error</td><td>userIdNotFound</td><td>user Id not exist</td></tr><tr><td>invalid</td><td>invalidRequest</td><td>invalid request</td></tr><tr><td>error</td><td>maximumAttemptsLimitExceeded</td><td>maximum attempts limit exceeded</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "(FORBIDDEN) - Unauthorized to perform the requested operation on resource <table><tr><td>Type</td><td>Code</td><td>Details</td><td>More Info</td></tr><tr><td>invalid</td><td>accessNotConfigured</td><td>The request operation is not configured to access this resource</td><td>Channel/Country/Business provided in the request is not supported currently</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "(INTERNAL SERVER ERROR) - API Server Error <table><tr><td>Type</td><td>Code</td><td>Details</td></tr><tr><td>fatal</td><td>serverUnavailable</td><td>The request failed due to an internal error/server unavailability</td></tr></table>",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "summary": "Retrieve a masked customer name",
+                "tags": [
+                    "User"
+                ]
+            }
+        }
+    },
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "tags": [
+        {
+            "description": "",
+            "name": "User"
+        }
+    ]
+}

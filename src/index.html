@@ -1,0 +1,68 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title swagger-translate="appTitle"></title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/swagger-ui.css">
+    <link rel="stylesheet" href="css/demo.css">
+    <!-- dependencies -->
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.5.4/js-yaml.min.js"></script>
+
+    <!-- angular-swagger-ui -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/service/defaultService.js"></script>
+    <script src="scripts/controller/MyCtrl.js"></script>
+    <script src="scripts/swagger-ui.js"></script>
+    <script src="scripts/swagger-model.js"></script>
+    <script src="scripts/swagger-client.js"></script>
+    <script src="scripts/swagger-modules.js"></script>
+    <script src="scripts/swagger-parser.js"></script>
+    <script src="scripts/swagger-i18n.js"></script>
+    <script src="scripts/modules/swagger-external-references.js"></script>
+    <script src="scripts/modules/swagger1-to-swagger2-converter.js"></script>
+    <script src="scripts/modules/swagger-yaml-parser.js"></script>
+    <script src="scripts/i18n/en.js"></script>
+    <script src="scripts/i18n/fr.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div ng-controller="MyCtrl" class="my-ctrl">
+            <div class="col-lg-3">
+                <div class="well sidebar-nav">
+                    <ul class="nav nav-list" ng-repeat="data in dataToList" data-toggle="collapse" data-target="#demo">
+                        <li class="nav-header">{{data.category}}</li>
+
+                        <li id="demo"><a href="#" ng-click="loadSwagger(data.entities[0].id)">{{data.entities[0].name}}</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+                <div class="col-lg-9">
+                    <h1 swagger-translate="appTitle"></h1>
+                    <form name="urlForm" ng-submit="swaggerUrl=url" class="form-inline">
+                        <input type="text" placeholder="swagger URL" class="form-control" id="url" name="url" ng-model="url" required>                        <button type="submit" class="btn btn-primary" swagger-translate="explore"></button>
+                        <button type="button" ng-click="setMx()" class="btn btn-link pull-right" ng-disabled="getLang()=='mx'">
+                            <span class="country mx"></span>
+                            <span swagger-translate="español"></span>
+                        </button>
+                        <button type="button" ng-click="setEn()" class="btn btn-link pull-right" ng-disabled="getLang()=='en'">
+                            <span class="country en"></span>
+                            <span swagger-translate="english"></span>
+                        </button>
+                    </form>
+                    <h3 ng-show="isLoading" swagger-translate="loading"></h3>
+                    <div swagger-ui url="swaggerUrl" loading="isLoading" api-explorer="true" trusted-sources="true" error-handler="myErrorHandler" permalinks="true"></div>
+                </div>
+
+        </div>
+    </div>
+    </div>
+</body>
+</html>

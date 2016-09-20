@@ -1,0 +1,232 @@
+{
+  "categories": [{
+    "category": "login",
+    "entities": [{
+      "name": "V1. login",
+      "id": "Swagger_mx_login"
+    }]
+  }, {
+    "category": "oauth",
+    "entities": [{
+      "name": "V1. oauth",
+      "id": "swagger-oauth.v1"
+    }]
+  }, {
+    "category": "Auth",
+    "entities": [{
+      "name": "V1.Auth",
+      "id": "swagger-auth.v1"
+    }, {
+      "name": "V2.Auth",
+      "id": "swagger-auth.v2"
+    }, {
+      "name": "Auth Proxy",
+      "id": "swagger-authProxy"
+    }]
+  }, {
+    "category": "Snapshot",
+    "entities": [{
+      "name": "V1. Snapshot",
+      "id": "swagger-snapshot.v1"
+    }]
+  }, {
+    "category": "Customer",
+    "entities": [{
+      "name": "Registration",
+      "id": "swagger-registration"
+    }, {
+      "name": "V1.Profile",
+      "id": "swagger-profile"
+    }, {
+      "name": "V2.Profile",
+      "id": "swagger-profile.v2"
+    }, {
+      "name": "User Name Retrieval",
+      "id": "swagger-userNameRetrieval"
+    }, {
+      "name": "Password Reset",
+      "id": "swagger-passwordReset"
+    }]
+  }, {
+    "category": "Rewards",
+    "entities": [{
+      "name": "Rewards",
+      "id": "swagger-rewards"
+    }, {
+      "name": "Rewards inquiry",
+      "id": "swagger-rewards-inquiry"
+    }]
+  }, {
+    "category": "Money Movement",
+    "entities": [{
+      "name": "Money Movement",
+      "id": "swagger-moneyMovement"
+    }, {
+      "name": "Domestic Internal (Inter Citi)",
+      "id": "swagger-moneymovement-interciti"
+    }]
+  }, {
+    "category": "Accounts",
+    "entities": [{
+      "name": "v1. Accounts",
+      "id": "swagger-accounts.v1"
+    }]
+  }, {
+    "category": "Locations",
+    "entities": [{
+      "name": "V1.Locations",
+      "id": "swagger-locations.v1"
+    }]
+  }, {
+    "category": "Delivery",
+    "entities": [{
+      "name": "V1.SMS-OTP",
+      "id": "swagger-sms-delivery.v1"
+    }]
+  }, {
+    "category": "Payees",
+    "entities": [{
+      "name": "Payees",
+      "id": "swagger-payees"
+    }]
+  }, {
+    "category": "Payee Management",
+    "entities": [{
+      "name": "Add Payee",
+      "id": "swagger-payeeManagement_payees_add"
+    }, {
+      "name": "Get Payee List",
+      "id": "swagger-payeeManagement_payees_get"
+    }, {
+      "name": "Get Payee Details",
+      "id": "swagger-payeeManagement_payee_get"
+    }, {
+      "name": "Get Merchant List",
+      "id": "swagger-payeeManagement_merchants_get"
+    }, {
+      "name": "Validate Account with Payee",
+      "id": "swagger-payeeManagement_accountWithPayeeValidation"
+    }, {
+      "name": "Validate Payee Nickname",
+      "id": "swagger-payeeManagement_nicknameValidation"
+    }]
+  }, {
+    "category": "Loans",
+    "entities": [{
+      "name": "Loans (EPP/LOP/ALOP)",
+      "id": "swagger-loans"
+    }]
+  }, {
+    "category": "Content",
+    "entities": [{
+      "name": "Content",
+      "id": "swagger-content"
+    }
+
+    ]
+  }, {
+    "category": "Config",
+    "entities": [{
+      "name": "config",
+      "id": "swagger-config"
+    }
+
+    ]
+  }, {
+    "category": "CCS",
+    "entities": [{
+      "name": "User",
+      "id": "swagger-ccs-user"
+    }, {
+      "name": "Security",
+      "id": "swagger-ccs-e2e"
+    }]
+  }, {
+    "category": "Mobile",
+    "entities": [{
+      "name": "SignOn",
+      "id": "swagger-mobile-signon"
+    }, {
+      "name": "Enroll",
+      "id": "swagger-mobile-enroll"
+    }, {
+      "name": "Snapshot",
+      "id": "swagger-mobile-snapshot"
+    }, {
+      "name": "validateEnroll",
+      "id": "swagger-mobile-validateOTP"
+    }]
+  }, {
+    "category": "CBOL",
+    "entities": [{
+      "name": "Orchestrator",
+      "id": "swagger-cbolOrchestrator"
+    }, {
+      "name": "Payments",
+      "id": "swagger-cbolPayments"
+    }]
+  }, {
+    "category": "MFA",
+    "entities": [{
+      "name": "MFA",
+      "id": "swagger-mfa"
+    }
+
+    ]
+  }, {
+    "category": "Utilities",
+    "entities": [{
+      "name": "Utilities",
+      "id": "swagger-utilities"
+    }
+
+    ]
+  }, {
+    "category": "Acquisitions",
+    "entities": [{
+      "name": "Application - Add",
+      "id": "swagger-acquisitions-ApplicationAdd"
+    }, {
+      "name": "Application - Add-GCIM",
+      "id": "swagger-acquisitions-ApplicationAddSwaggerGCIM"
+    }, {
+      "name": "Application - Update",
+      "id": "swagger-acquisitions-ApplicationUpdate"
+    }, {
+      "name": "Application - Inquiry",
+      "id": "swagger-acquisitions-ApplicationInquiry"
+    }, {
+      "name": "Application - Pre-screening",
+      "id": "swagger-acquisitions-Prescreening"
+    }, {
+      "name": "Application - IPA Checking",
+      "id": "swagger-acquisitions-IPACheckInq"
+    }, {
+      "name": "Application - Final Submit",
+      "id": "swagger-acquisitions-FinalSubmit"
+    }, {
+      "name": "Application - Image Processing",
+      "id": "swagger-acquisitions-ImageProcessing"
+    }, {
+      "name": "Application - Insert Document",
+      "id": "swagger-acquisitions-InsertDocument"
+    }, {
+      "name": "Application - Validate OTP",
+      "id": "swagger-acquisitions-ValidateOTP1"
+    }, {
+      "name": "Application - Address Search",
+      "id": "swagger-acquisitions-AddressSearchUsingZipCodeInq"
+    }, {
+      "name": "Application - Reference Data",
+      "id": "swagger-acquisitions-ReferenceData"
+    }, {
+      "name": "Application - Reference Data-GCIM",
+      "id": "swagger-acquisitions-ReferenceDataSwaggerGCIM"
+    }
+
+
+
+
+    ]
+  }]
+}
