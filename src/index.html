@@ -35,8 +35,8 @@
 
     <div class="container-fluid">
         <div class="row-fluid">
-
             <div ng-controller="MyCtrl" class="my-ctrl">
+                <!-- To display the Menu of available swagger contract-->
             <div class="col-lg-3 well sidebar-nav">
                 <div class="accordion" ng-repeat="data in dataToList">
                     <div class="panel panel-default">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </div>
-
+                <!--To display the main body -->
                 <div class="col-lg-9">
                     <h1 swagger-translate="appTitle"></h1>
                     <form name="urlForm" ng-submit="swaggerUrl=url" class="form-inline">

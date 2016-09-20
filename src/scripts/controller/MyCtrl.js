@@ -26,11 +26,6 @@ app.controller('MyCtrl', function($scope,$http, swaggerTranslator,myservice) {
     $scope.myservice=myservice.initialUrl;
     $scope.new=$scope.myservice;
 
-    $scope.$watch(function () {
-        return myservice;
-    }, function (value) {
-        $scope.new = value;
-    });
     $scope.url = $scope.swaggerUrl = $scope.new;//'/angular-swagger-ui/src/Swagger_mx_login.json';
     // error management
     $scope.myErrorHandler = function(data, status){
