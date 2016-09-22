@@ -44,7 +44,7 @@
                             <h4 class="panel-title">{{data.category}}</h4>
                         </div>
                         <div id="{{$index}}" class="panel-collapse collapse">
-                            <div class="panel-body" ng-repeat="entry in data.entities"><a href="#" ng-click="loadSwagger(entry.id)">{{entry.name}}</a></div>
+                            <div class="panel-body" ng-repeat="entry in data.entities"><a href="#" ng-click="loadSwagger(entry.id,entry.type)">{{entry.name}}</a></div>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                         </button>
                     </form>
                     <h3 ng-show="isLoading" swagger-translate="loading"></h3>
-                    <div swagger-ui url="swaggerUrl" loading="isLoading" api-explorer="true" trusted-sources="true" error-handler="myErrorHandler" permalinks="true"></div>
+                    <div ng-change="{{fileType}}" parser="{{fileType}}" swagger-ui url="swaggerUrl" loading="isLoading" api-explorer="true" trusted-sources="true" error-handler="myErrorHandler" permalinks="true"></div>
                 </div>
 
         </div>

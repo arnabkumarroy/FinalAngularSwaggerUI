@@ -1,0 +1,169 @@
+swagger: '2.0'
+
+info:
+  description: There are two  APIs defined in this document. 
+   - One gives filtered eligible credit card accounts that client can use to decide which cards should be shown with activate card link.
+   - Second gives status of a card. Client can use the status and build logic to decide necessory display of links.
+  title: Card Activation API
+  version: 1.0.0
+  
+produces:
+  - application/json
+schemes:
+  - https
+
+definitions:
+  Error:
+    properties:
+      code:
+        description: Error code which qualifies the error
+        type: string
+      details:
+        description: Human readable explanation specific to the occurrence of the problem
+        type: string
+      location:
+        description: The name of the field that resulted in the error
+        type: string
+      moreInfo:
+        description: URI to human readable documentation of the error
+        type: string
+      type:
+        description: >-
+          <br>invalid - Request did not confirm to the specification and was
+          unprocessed & rejected. Please fix the value and try
+          again</br>                         <br>warn - Request was partially
+          processed.  E.g. some of the fields are missing in response to the
+          system issues,  request was accepted successfully but will be
+          processed
+          asynchronously</br>                                                          
+          <br>error - The request was accepted but could not be processed
+          successfully</br>            <br>fatal - There was an internal system
+          error while processing the request. These are technical errors and
+          will be resolved by Citi, and the consumer should retry after some
+          time. Business errors will not be categorized as fatal </br>
+        enum:
+          - ERROR
+          - WARN
+          - INVALID
+          - FATAL
+        type: string
+    required:
+      - type
+      - code
+  CardPlastic:
+    type: object
+    properties:
+      cardNumber:
+        description: Customers Card Plastic Number not account Number.
+        example: 1234-5678-1234-5678
+        type: string
+      statusCode:
+        description: Customers Card Plastic status.
+        example: Active / Issued
+        type: string
+      
+basePath: /apiv1.0
+     
+
+paths:
+  /api/v1/cardActivation/eligibleCards:
+    post:
+      description: Filters cards List to return only cards that are ready for  activation.
+      parameters:
+        - name: creditCardPlastics
+          in: body
+          description: List of creditCards in profile possibly with basic filtering applied based on ECS status like issued. 
+          required: true
+          schema:
+           type: array
+           items:
+             $ref: '#/definitions/CardPlastic'
+        - name: Accept-Language
+          in: header
+          description: List of acceptable human languages for response
+          required: true
+          type: string
+        - name: channelId
+          in: header
+          description: channel id used by the user
+          required: true
+          type: string
+        - name: businessCode
+          in: header
+          description: 3 character business code, for Mexico business it is MXT
+          required: true
+          type: string
+        - name: countryCode
+          in: header
+          description: Country code in 2 character ISO 3166 format
+          required: true
+          type: string
+        - name: scope
+          in: header
+          description: scope, either visitor or customer
+          required: false
+          type: string
+      responses:
+        '200' : 
+          description: Successful response
+          schema:
+            type: array
+            items: 
+               $ref: '#/definitions/CardPlastic'
+        '400' : 
+          description: (BAD REQUEST) - Request was not processed.
+          schema:
+            $ref: '#/definitions/Error'
+        '403' :
+          description: (FORBIDDEN) - API Server Error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /api/v1/cardActivation/cardStatus/{creditCardPlasticNumber}:
+    post:
+      description: get card status used for deciding if card is ready for activation.
+      parameters:
+        - name: creditCardPlasticNumber
+          in: path
+          description: creditCard number for which you need card status.
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: List of acceptable human languages for response
+          required: true
+          type: string
+        - name: channelId
+          in: header
+          description: channel id used by the user
+          required: true
+          type: string
+        - name: businessCode
+          in: header
+          description: 3 character business code, for Mexico business it is MXT
+          required: true
+          type: string
+        - name: countryCode
+          in: header
+          description: Country code in 2 character ISO 3166 format
+          required: true
+          type: string
+        - name: scope
+          in: header
+          description: scope, either visitor or customer
+          required: false
+          type: string
+      responses:
+        '200' : 
+          description: Successful response
+          schema: 
+              type: string
+        '400' : 
+          description: (BAD REQUEST) - Request was not processed.
+          schema:
+            $ref: '#/definitions/Error'
+        '403' :
+          description: (FORBIDDEN) - API Server Error
+          schema:
+            $ref: '#/definitions/Error'                        
+            

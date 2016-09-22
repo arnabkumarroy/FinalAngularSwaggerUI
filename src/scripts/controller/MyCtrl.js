@@ -4,18 +4,19 @@
 app.controller('MyCtrl', function($scope,$http, swaggerTranslator,myservice) {
     // For display left side menu dynamically entities
     $scope.dataToList=[];
-
+    $scope.fileType="json";
     $http.get('mainFile.json').then(function(response) {
         $scope.dataToList =response.data.categories;
         console.log($scope.dataToList);
 
     });
-    $scope.loadSwagger=function (swaggerFileName) {
+    $scope.loadSwagger=function (swaggerFileName,swaggerFileType) {
         $scope.swaggerFileName=swaggerFileName;
         //console.log("Click Event done");
-
-        myservice.setJsonValue=$scope.swaggerFileName+".json";
-        $scope.url = $scope.swaggerUrl = myservice.setJsonValue;//'/angular-swagger-ui/src/Swagger_mx_login.json';
+        $scope.fileType=swaggerFileType;
+        console.log("swaggerFileType:"+swaggerFileType);
+        myservice.setJsonValue=$scope.swaggerFileName;
+        $scope.url = $scope.swaggerUrl = myservice.setJsonValue+"."+swaggerFileType;//'/angular-swagger-ui/src/Swagger_mx_login.json';
 
         console.log("TableCtrlTableCtrl:"+$scope.myservice);
     };
